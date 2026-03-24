@@ -22,6 +22,14 @@ import {
   IS_UE,
   IS_DA,
 } from './commerce.js';
+import {
+  runExperimentation,
+  showExperimentationRail,
+} from './experiment-loader.js';
+
+const experimentationConfig = {
+  prodHost: 'main--comu01-citisignal--adobeapachols.aem.live',
+};
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -105,6 +113,8 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
+  await runExperimentation(document, experimentationConfig);
+
   const main = doc.querySelector('main');
   if (main) {
     try {
@@ -149,6 +159,8 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  await showExperimentationRail(document, experimentationConfig);
 }
 
 /**
